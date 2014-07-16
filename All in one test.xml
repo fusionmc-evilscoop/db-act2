@@ -38,13 +38,83 @@
 	<TargetBlacklist actorid="5671"/> <!-- Armor Rack -->
 	<TargetBlacklist actorid="15937"/> <!-- Armor Rack -->
 	<TargetBlacklist actorid="78030"/> <!-- Wilderness Scarecrow -->
+	<TargetBlacklist actorId="114622" name="Tyrael" />
 </TargetBlacklists>
 
 
-<Order>
+<!-- act2 home world id = 161472 -->
+<!-- zoltan entry world - 50613 -->
 
+	<Order>
+		<TrinityMaxDeaths questId="1" max="20" />
+		<ToggleTargeting questId="1" combat="True" looting="True" lootRadius="100" killRadius="80" />
+			
+			
+		<If condition="HasQuest(346108) or HasQuest(346111) or HasQuest(346115) or HasQuest(346117) or HasQuest(346119) or HasQuest(346121) or HasQuest(346123) or HasQuest(347650) or HasQuest(347652) or HasQuest(347456) or HasQuest(375257) or HasQuest(375261)" >
+			<LogMessage message="Inquest" />
+			
+			<While condition="CurrentWorldId != 50613" >
+				<UseWaypoint waypointNumber="25" questId="1"/>
+				<WaitTimer questId="1" stepId="1" waitTime="1000"/>
+			</While>
 	
+			
+			<!-- Enter middle tp -->
+			<If condition="HasQuest(347456)" >
+		        <MoveToActor questId="1" actorId="159581" isPortal="True" destinationWorldId="60193" x="655" y="282" z="-12" />
+				<WaitTimer questId="1" stepId="1" waitTime="2000"/>
+			</If>
+			
+			<!-- Enter left tp unknown depths -->
+			<If condition="HasQuest(346108) or HasQuest(346115) or HasQuest(346111) or HasQuest(347650)" >
+			  <!-- thug, arch, hellscream -->
+			    <MoveToActor questId="1" actorId="185067" isPortal="True" destinationWorldId="50610" interactRange="20" x="601" y="591" z="-9"  />
+		    	<WaitTimer questId="1" stepId="1" waitTime="2000"/>
+			</If>
+			
+			<!-- enter right tp storm halls-->
+		    <If condition="HasQuest(375261) or HasQuest(346121) or HasQuest(347652) or HasQuest(347654) or HasQuest(369298)" >
+			    <MoveToMapMarker questId="1" x="601" y="769" z="-11" markerNameHash="-1363317798" actorId="185067" interactRange="10" 
+                       pathPrecision="5" pathPointLimit="250" isPortal="True" destinationWorldId="-1" statusText="" /> 
+				<WaitTimer questId="1" stepId="1" waitTime="2000"/>
+			</If>	
+			
+			<!-- enter center tp realm of shadows-->
+			<If condition="HasQuest(346119) or HasQuest(346117)" >
+				<SafeMoveTo questId="1" x="576" y="679" z="-11" pathPrecision="5" pathPointLimit="250" statusText="" /> 
+				<WaitTimer questId="1" stepId="1" waitTime="3000"/>
+                <MoveToActor questId="1" x="550" y="679" z="-4"  actorId="228873" interactRange="10" isPortal="True" destinationWorldId="-1" /> 
+				<WaitTimer questId="1" stepId="1" waitTime="2000"/>
+			</If>
+				
+		<!-- Kill things -->
+		
+			
+			<If condition="HasQuest(375261)" >
+				
+				<ExploreDungeon stayAfterBounty="False" questId="1" until="ObjectFound" actorId="365097" objectDistance="300" boxSize="15" pathPrecision="30" boxTolerance="0.5" ignoreMarkers="False" />
+				<WaitTimer questId="1" stepId="1" waitTime="1000"/>
+				<UseObject questId="1" actorId="365097" />
+				<MoveTo questId="1" actorId="365097" pathPrecision="10" />				
+				<ExploreDungeon stayAfterBounty="False" questId="1" until="BountyComplete" boxSize="20" boxTolerance="0.3" pathPrecision="40" />
+			
+				<UseTownPortal questId="1" />  
+		    </If>
+			
 
-</Order>
+			<ExploreDungeon stayAfterBounty="False" questId="1" until="BountyComplete" boxSize="20" boxTolerance="0.3" pathPrecision="40" />
+			
+			<WaitTimer questId="1" stepId="1" waitTime="2500"/>
+				<If condition="Me.IsInTown">
+				<LogMessage message="intown" />
+				</If>
+	   
+		</If>
 
+<LogMessage message="========== ALL DONE =========== " />		
+		<TownPortal waitTime="500" questId="1" />
+		<WaitTimer questId="1" stepId="1" waitTime="3000"/>	
+		<LeaveGame reason="done" stayInParty="False" />
+
+	</Order>
 </Profile>
