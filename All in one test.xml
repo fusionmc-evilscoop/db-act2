@@ -111,6 +111,31 @@
 	   
 		</If>
 
+	<If condition="HasQuest(358353)" > <!-- kill belial -->
+		<UseWaypoint waypointNumber="20" questId="1"/>
+		<WaitTimer questId="1" stepId="1" waitTime="1000" />
+		
+		<SafeMoveTo questId="1" stepId="2" name="Imperial Palace" pathPrecision="10" x="261" y="560" z="7" />
+		<WaitTimer questId="1" stepId="2" waitTime="1000" />
+	
+		<MoveToActor questId="1" stepId="2" actorId="159574" isPortal="True" maxSearchDistance="50" interactRange="20" destinationWorldId="60756" x="241" y="557" z="7" />
+		<WaitTimer questId="1" stepId="2" waitTime="1000" />
+		
+		<TrinitySetQuesting/>
+		
+		<While condition="not ActorExistsAt(185156, Me.Position.X, Me.Position.Y, Me.Position.Z, 200)">
+			<WaitTimer questId="1" stepId="2" waitTime="500" />
+		</While>
+		<WaitTimer questId="1" stepId="2" waitTime="2000" />
+	</If>
+		
+		
+		<!-- Oasis quests -->
+		<If condition="HasQuest(346065) or HasQuest(346067) or HasQuest(346069) or HasQuest(346071) or HasQuest(346075) or HasQuest(347591) or HasQuest(347598) or HasQuest(347600) or HasQuest(347604) or HasQuest(369298) or HasQuest(369300) or HasQuest(369302) or HasQuest(369813)" >
+			<UseWaypoint waypointNumber="23" questId="1"/>
+	
+		</If>
+		
 <LogMessage message="========== ALL DONE =========== " />		
 		<TownPortal waitTime="500" questId="1" />
 		<WaitTimer questId="1" stepId="1" waitTime="3000"/>	
